@@ -3,11 +3,11 @@
 **This project is in the early stages of development and doesn't work yet. 
 Please check back later.**
 
-# Resume Generator
+# Résumé Generator
 
-This program generates resumes. Given a master resume source, it can generate 
-tailored resumes. That way, you can maintain only one resume and generate 
-whichever versions you need. This greatly simplifies the resume creating 
+This program generates résumés. Given a master résumé source, it can generate
+tailored résumés. That way, you can maintain only one résumé and generate
+whichever versions you need. This greatly simplifies the résumé creating
 process.
 
 # Dependencies

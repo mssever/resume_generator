@@ -80,6 +80,10 @@ class Collection(object):
                 raise AttributeError(
                     'The attribute "{}" doesn\'t exist or can\'t be removed.'.format(i)
                 )
+    
+    def keys(self):
+        '''Return a generator listing all the settings in alphabetical order as (key, value).'''
+        return ((key, self.__dict__[key]) for key in sorted(self.__dict__.keys()) if key in self._contained_items)
 
     def __repr__(self):
         '''Return a human-readable listing of this instance's contents.'''

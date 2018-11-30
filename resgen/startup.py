@@ -5,8 +5,8 @@ For help on any of the modes, run `{prog} <mode> --help`.
 
 Modes
 =====
-new         Create a new project or resume style.
-generate    Generate a resume.
+new         Create a new project or résumé style.
+generate    Generate a résumé.
 show        Show an example file to see the available documentation.
 
 Global options
@@ -18,11 +18,17 @@ Global options
 '''
 
 import importlib
+import os
 import sys
 
 from resgen.config import get_config
 
 def main():
+    config = get_config()
+    config.progname = sys.argv[0]
+    with open(os.path.join(config.basedir, 'resgen', 'data', 'version.txt')) as f:
+        config.version = f.read().strip()
+    config.version_string = f'{config.progname} {config.version}'
     modes = ('new', 'generate', 'show')
     if len(sys.argv) > 1 and sys.argv[1] in modes:
         mode = sys.argv[1]
@@ -30,11 +36,11 @@ def main():
         mod = importlib.import_module(f'resgen.mode.{mode}')
         return mod.run()
     elif '--version' in sys.argv:
-        print(get_config().version_string)
+        print(config.version_string)
         return 0
     elif '--help' in sys.argv or '-h' in sys.argv:
-        print(__doc__.format(prog=get_config().progname))
+        print(__doc__.format(prog=config.progname))
         return 0
     else:
-        print(__doc__.format(prog=get_config().progname))
+        print(__doc__.format(prog=config.progname))
         return 1
