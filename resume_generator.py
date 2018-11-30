@@ -18,4 +18,4 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 6:
     config.basedir = os.path.dirname(os.path.realpath(__file__))
     sys.exit(resgen.startup.main())
 else:
-    sys.exit('This program requires Python 3.6 or higher.{sep}Current Python:\t{ver}'.format(sep=os.linesep, ver=sys.version))
+    sys.exit('ERROR: This program requires Python 3.6 or higher.{sep}Current Python:\t{ver}'.format(sep=os.linesep, ver=sys.version))
