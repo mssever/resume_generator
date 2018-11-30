@@ -25,7 +25,7 @@ from resgen.config import get_config
 
 def main():
     config = get_config()
-    config.progname = sys.argv[0]
+    config.progname = os.path.basename(sys.argv[0])
     with open(os.path.join(config.basedir, 'resgen', 'data', 'version.txt')) as f:
         config.version = f.read().strip()
     config.version_string = f'{config.progname} {config.version}'

@@ -10,12 +10,13 @@ process.
 import os
 import sys
 
-if sys.version_info.major >= 3 and sys.version_info.minor >= 6:
+ver = sys.version_info
+if ver.major > 3 or (ver.major == 3 and ver.minor >= 6):
     import resgen.startup
     import resgen.config
     
     config = resgen.config.get_config()
     config.basedir = os.path.dirname(os.path.realpath(__file__))
-    sys.exit(resgen.startup.main())
+    exit(resgen.startup.main())
 else:
-    sys.exit('ERROR: This program requires Python 3.6 or higher.{sep}Current Python:\t{ver}'.format(sep=os.linesep, ver=sys.version))
+    exit('ERROR: This program requires Python 3.6 or higher.{sep}Current Python:\t{ver}'.format(sep=os.linesep, ver=sys.version))
