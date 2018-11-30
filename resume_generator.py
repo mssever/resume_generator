@@ -1,4 +1,4 @@
-#!/usr/local/env python3
+#!/usr/bin/env python3
 
 '''
 This program generates résumés. Given a master résumé source, it can generate
