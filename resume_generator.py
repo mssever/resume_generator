@@ -1,4 +1,4 @@
-#!/usr/local/env python3
+#!/usr/bin/env python3
 
 '''
 This program generates resumes. Given a master resume source, it can generate 
@@ -19,7 +19,7 @@ if sys.version_info.major >= 3 and sys.version_info.minor >= 6:
     config.progname = sys.argv[0]
     with open(os.path.join(config.basedir, 'resgen', 'data', 'version.txt')) as f:
         config.version = f.read().strip()
-    config.version_string = f'{config.progname} {config.version}'
+    config.version_string = config.progname + ' ' + config.version
     sys.exit(resgen.startup.main())
 else:
-    sys.exit('This program requires Python 3.6 or higher.\nCurrent Python:\t' + sys.version)
+    sys.exit('ERROR: This program requires Python 3.6 or higher.\nCurrent Python:\t' + sys.version)
