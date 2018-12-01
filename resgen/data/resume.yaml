@@ -1,2 +1,122 @@
 %YAML 1.2
 ---
+#--- !!omap
+person:  # This is the name you will use to refer to this object
+  name: Someone Fancy
+  phone: (555) 555-5555
+  # Or:
+  # phone:
+  #   Home: (555) 555-5555
+  #   Cell: (555) 555-6666
+  address: |  # Use | for line continuation which preserves line breaks
+    123 Main St.
+    Somewhere, QW 12345
+  # photo: /path/to/photo # requires additional dependencies if used
+
+synopsis_heading:
+  type: h1
+  tags: [long]
+  priority: 5
+  content: Synopsis
+
+synopsis_content:
+  type: text
+  parent: synopsis_heading
+  # Tags and priority can be explicitly given, or inherited from the parent.
+  #
+  # Multiple paragraphs are possible. Use > for line continuation where line
+  # breaks become spaces.
+  content: >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin mollis eros 
+    at turpis volutpat, quis semper quam consequat. Quisque ullamcorper, orci 
+    consectetur congue facilisis, elit velit tempus diam, vel porta lacus nulla 
+    eu risus. Integer vitae nulla et tortor porttitor sagittis. 
+    
+    Quisque a elementum orci. Maecenas ultrices iaculis felis, non elementum 
+    sapien. Maecenas volutpat ut enim in pellentesque. Ut in ipsum porttitor 
+    justo congue dapibus a et est. Pellentesque vulputate condimentum metus 
+    quis ultrices. Praesent in ultricies elit.
+
+work_heading:
+  type: h1
+  tags: [long, short]
+  priority: 1
+  content: Work History
+
+work_content:
+  type: multiple   # Contains multiple items. Set content to a list of objects.
+  parent: work_heading
+  content:
+    - type: job
+      employer:
+        type: org
+        name: Acme Company
+        location: Somewhere in the World
+      start_date: 2016-01-01  # Give a complete date and it will be formatted correctly on output
+      end_date: null  # null means the job hasn't ended yet.
+      content:
+        - The first listed duty or accomplishment.
+        - type: text
+          tags: [long]
+          priority: 2
+          content: You can also give objects if you need to set metadata for an item.
+        - Mix and match as you like.
+    - type: job
+      priority: 5  # All jobs can include priorities and tags or inherit them.
+      employer:
+        type: org
+        name: Some Other Company
+        location: Some Other City
+      start_date: 2000-01-01
+      end_date: 2015-12-31
+      content:
+        - Accomplishments!
+        - More accomplishments!
+
+education_heading:
+  type: h1
+  tags: [long, short]
+  priority: 2
+  content: Education
+
+education_content:
+  type: multiple
+  parent: education_heading
+  content:
+    - type: school
+      institution: &my_school   # Create a variable to automatically include it later/
+        type: org
+        name: My University
+        location: Somewhere Fancy
+      graduation_date: 1999-09-01
+      degree: M.A. in Annoyance
+      content:
+        - Cool thing 1
+        - Cool thing 2
+    - type: school
+      priority: 5
+      institution: *my_school  # Includes a reference to &my_school, defined above.
+      graduation_date: 1998-09-01
+      degree: B.A. in Nonsense
+      # content can be omitted
+
+skills_heading:
+  type: h1
+  tags: [long, short]
+  priority: 1
+  content: Skills
+
+skills_content:
+  type: multiple
+  parent: skills_heading
+  content:
+    - Skill 1
+    - Skill 2
+    - type: text
+      priority: 3
+      content: Skill 3
+    - type: text
+      tags: [long] # You must fully specify all tags if you give any.
+      # Since priority isn't given, it is inherited from its parent, not its
+      # sibling. Thus, its value is 1.
+      content: Skill 4
