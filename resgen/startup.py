@@ -29,6 +29,7 @@ def main():
     with open(os.path.join(config.basedir, 'resgen', 'data', 'version.txt')) as f:
         config.version = f.read().strip()
     config.version_string = f'{config.progname} {config.version}'
+    config.resume_part_ids = {}
     modes = ('new', 'generate', 'show')
     if len(sys.argv) > 1 and sys.argv[1] in modes:
         mode = sys.argv[1]
