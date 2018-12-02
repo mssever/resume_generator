@@ -17,6 +17,8 @@ def show_config():
 def dump_yaml(doc):
     yaml = YAML()
     yaml.load(doc)
-    return str(yaml)
-    
-    #Try: compact, dump, map, seq
+    from resgen.lib.yaml_types import make_object
+    out = []
+    out.append('\n\n'.join(repr(make_object(yaml[name], obj_name=name)) for name in yaml.names()))
+    out.append('\n\n'.join(str(make_object(yaml[name], obj_name=name)) for name in yaml.names()))
+    return '\n\n==============================================================\n\n'.join(out)
