@@ -1,6 +1,6 @@
 import os
 
-from resgen.lib.yamllib.parser import Parse_YAML
+from resgen.lib.parserlib.parser import Parse_YAML
 from resgen.config import get_config
 
 def run():
@@ -25,7 +25,7 @@ def show_config():
 def dump_yaml(doc):
     yaml = Parse_YAML()
     yaml.load(doc)
-    from resgen.lib.yamllib.factories import make_object
+    from resgen.lib.parserlib.factories import make_object
     config = get_config()
     out = []
     #out.append('\n\n'.join(repr(make_object(yaml[name], obj_name=name, id_register=config.resume_part_ids)) for name in yaml.names()))

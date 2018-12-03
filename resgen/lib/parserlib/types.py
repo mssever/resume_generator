@@ -1,4 +1,4 @@
-from resgen.lib.yamllib.types_base import YamlTypesBase
+from resgen.lib.parserlib.types_base import YamlTypesBase
 
 __all__ = ['make_object', 'Text', 'Person', 'H1', 'Multiple', 'Job', 'School', 'Org']
 
