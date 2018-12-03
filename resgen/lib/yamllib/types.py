@@ -35,24 +35,13 @@ class H1(YamlTypesBase):
     
     def _show_in_repr(self):
         return [('title', self.title)]
+    
+    def __str__(self):
+        return str(self.title)
 
 class Multiple(YamlTypesBase):
-    #def __init__(self, **kwargs):
-    #    kwargs['set_content'] = False
-    #    YamlTypesBase.__init__(self, **kwargs)
-    #    content = kwargs.get('content', None)
-    #    if content is not None:
-    #        if isinstance(content, list):
-    #            out = []
-    #            for i in content:
-    #                if isinstance(i, dict) and 'type' in i.keys():
-    #                    out.append(make_object(i, self.tags, self.priority, self.id_register))
-    #                else:
-    #                    out.append(i)
-    #            self.content = out
-    #        else:
-    #            self.content = None
-    pass
+    def __str__(self):
+        return '\n'.join(str(i) for i in self.content)
 
 class Job(YamlTypesBase):
     def __init__(self, **kwargs):
@@ -60,33 +49,30 @@ class Job(YamlTypesBase):
         YamlTypesBase.__init__(self, **kwargs)
         self.employer = kwargs.get('employer', None)
         if isinstance(self.employer, dict) and 'type' in self.employer.keys():
-            self.employer = factories.make_object(self.employer, self.tags, self.priority, self.id_register)
+            try:
+                self.employer = factories.make_object(self.employer, self.tags, self.priority, self.id_register)
+            except Exception:
+                self.employer = None
+                raise
         self.start_date = kwargs.get('start_date', None)
         self.end_date = kwargs.get('end_date', None)
         if self.end_date is None:
             self.end_date = 'Present'
     
     def _show_in_repr(self):
-        return [
-            ('employer', repr(self.employer)),
-            ('start_date', self.start_date),
-            ('end_date', self.end_date)
-        ]
+        try:
+            return [
+                ('employer', repr(self.employer)),
+                ('start_date', self.start_date),
+                ('end_date', self.end_date)
+            ]
+        except AttributeError:  # Likely produced when calling repr from an exception
+            return []
     
     def __str__(self):
         return f'{self.start_date}–{self.end_date}: {self.employer}'
 
 class School(YamlTypesBase):
-    # type: school
-    #    institution: &my_school   # Create a variable to automatically include it later/
-    #      type: org
-    #      name: My University
-    #      location: Somewhere Fancy
-    #    graduation_date: 1999-09-01
-    #    degree: M.A. in Annoyance
-    #    content:
-    #      - Cool thing 1
-    #      - Cool thing 2
     def __init__(self, **kwargs):
         from . import factories
         YamlTypesBase.__init__(self, **kwargs)

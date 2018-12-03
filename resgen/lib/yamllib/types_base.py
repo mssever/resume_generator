@@ -39,26 +39,23 @@ class YamlTypesBase:
                 self.content = content
         else:
             self.content = None
-        self.id = kwargs.get('id', None)
-        #print(f'\tself.type = {type(self).__name__}\n\tself.content = {self.content}\nself.id = {self.id}')
+        self.id_ = kwargs.get('id', None)
         obj_name = kwargs.get('obj_name', None)
-        #print(f'obj_name = {obj_name}')
-        if self.id is None and obj_name is not None:
-            self.id = obj_name
-        #print(f'new self.id = {self.id}', end='\n~~~~~~~~~\n\n')
+        if self.id_ is None and obj_name is not None:
+            self.id_ = obj_name
         self.id_register = kwargs.get('id_register', None)
         if not isinstance(self.id_register, dict) and self.id_register is not None:
             raise TypeError(f'Wrong type for id_register. Expected dict or None; got {repr(self.id_register)}.')
-        if self.id_register is not None and 'id' in keys:
-            if self.id in self.id_register.keys():
-                raise ValueError(f'Duplicate IDs! The id "{self.id}" already exists. Current object: {repr(self)}')
-            self.id_register[self.id] = self
+        if self.id_register is not None and self.id_:
+            if self.id_ in self.id_register.keys():
+                raise ValueError(f'Duplicate IDs! The id "{self.id_}" already exists. Current object type: {type(self).__name__}')
+            self.id_register[self.id_] = self
         
     def __repr__(self):
         props = self._show_in_repr() + [
             ('tags', self.tags),
             ('priority', self.priority),
-            ('id', self.id)
+            ('id_', self.id_)
         ]
         if self.content:
             props += [('content', self.content)]

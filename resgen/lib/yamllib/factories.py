@@ -12,7 +12,7 @@ def make_object(src, inherited_tags=None, inherited_priority=None, id_register=N
         out['id_register'] = id_register
     for key, value in src.items():
         if key == 'type':
-            cls = getattr(types, value.capitalize()) #all_types[value]
+            cls = getattr(types, value.capitalize())
         else:
             if isinstance(value, str):
                 value = value.strip()
