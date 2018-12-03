@@ -43,6 +43,7 @@ work:
   type: h1
   tags: [long, short]
   priority: 1
+  id: me  # BOGUS: Added for debugging
   title: Work History
   content:
     type: multiple   # Contains multiple items. Set content to a list of objects.
@@ -53,7 +54,7 @@ work:
           name: Acme Company
           location: Somewhere in the World
         start_date: 2016-01-01  # Give a complete date and it will be formatted correctly on output
-        end_date: null  # null means the job hasn't ended yet.
+        end_date: null  # null means the job hasn't ended yet. Or, just omit end_date altogether.
         content:
           - The first listed duty or accomplishment.
           - type: text
@@ -65,6 +66,7 @@ work:
         priority: 5  # All jobs can include priorities and tags or inherit them.
         employer:
           type: org
+          id: work  # BOGUS: Added for debugging
           name: Some Other Company
           location: Some Other City
         start_date: 2000-01-01

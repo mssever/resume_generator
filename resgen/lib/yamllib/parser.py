@@ -1,15 +1,15 @@
-from ruamel.yaml import YAML as upstream
+from ruamel.yaml import YAML
 
 class NotLoadedError(Exception):
     pass
 
-class YAML(upstream):
+class Parse_YAML(YAML):
     def __init__(self, *args, **kwargs):
-        upstream.__init__(self, *args, **kwargs)
+        YAML.__init__(self, *args, **kwargs)
         self.__data = None
     
     def load(self, *args, **kwargs):
-        self.__data = upstream.load(self, *args, **kwargs)
+        self.__data = YAML.load(self, *args, **kwargs)
     
     def __iter__(self):
         return self.__data
@@ -18,7 +18,7 @@ class YAML(upstream):
     #    if self.__data is not None and attr in self.__data:
     #        return self.__data[attr]
     #    else:
-    #        return upstream.__getattr__(self, attr)
+    #        return YAML.__getattr__(self, attr)
     def __getitem__(self, key):
         return self.__data[key]
     
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     # Debugging code
     import os
     with open(os.path.join(os.path.dirname(__file__), '..','data','resume.yaml')) as f:
-        y = YAML()
+        y = Parse_YAML()
         y.load(f)
     print(y, end='\n\n\n\n')
     print(y['me'], end='\n============\n\n\n')

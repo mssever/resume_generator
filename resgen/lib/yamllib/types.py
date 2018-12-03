@@ -1,4 +1,4 @@
-from resgen.lib.yaml_types_base import make_object, YamlTypesBase
+from resgen.lib.yamllib.types_base import YamlTypesBase
 
 __all__ = ['make_object', 'Text', 'Person', 'H1', 'Multiple', 'Job', 'School', 'Org']
 
@@ -56,10 +56,11 @@ class Multiple(YamlTypesBase):
 
 class Job(YamlTypesBase):
     def __init__(self, **kwargs):
+        from . import factories
         YamlTypesBase.__init__(self, **kwargs)
         self.employer = kwargs.get('employer', None)
         if isinstance(self.employer, dict) and 'type' in self.employer.keys():
-            self.employer = make_object(self.employer, self.tags, self.priority, self.id_register)
+            self.employer = factories.make_object(self.employer, self.tags, self.priority, self.id_register)
         self.start_date = kwargs.get('start_date', None)
         self.end_date = kwargs.get('end_date', None)
         if self.end_date is None:
@@ -67,7 +68,7 @@ class Job(YamlTypesBase):
     
     def _show_in_repr(self):
         return [
-            ('employer', self.employer),
+            ('employer', repr(self.employer)),
             ('start_date', self.start_date),
             ('end_date', self.end_date)
         ]
@@ -76,7 +77,34 @@ class Job(YamlTypesBase):
         return f'{self.start_date}–{self.end_date}: {self.employer}'
 
 class School(YamlTypesBase):
-    pass
+    # type: school
+    #    institution: &my_school   # Create a variable to automatically include it later/
+    #      type: org
+    #      name: My University
+    #      location: Somewhere Fancy
+    #    graduation_date: 1999-09-01
+    #    degree: M.A. in Annoyance
+    #    content:
+    #      - Cool thing 1
+    #      - Cool thing 2
+    def __init__(self, **kwargs):
+        from . import factories
+        YamlTypesBase.__init__(self, **kwargs)
+        self.institution = kwargs.get('institution', None)
+        if isinstance(self.institution, dict) and 'type' in self.institution.keys():
+            self.institution = factories.make_object(self.institution, self.tags, self.priority, self.id_register)
+        self.graduation_date = kwargs.get('graduation_date', None)
+        self.degree = kwargs.get('degree', '')
+    
+    def _show_in_repr(self):
+        return [
+            ('institution', repr(self.institution)),
+            ('graduation_date', self.graduation_date),
+            ('degree', self.degree)
+        ]
+    
+    def __str__(self):
+        return f'{self.graduation_date}: {self.degree} from {self.institution}'
 
 class Org(YamlTypesBase):
     def __init__(self, **kwargs):
@@ -92,13 +120,3 @@ class Org(YamlTypesBase):
     
     def __str__(self):
         return f'{self.name}, {self.location}'
-
-types = {
-    'text': Text,
-    'person': Person,
-    'h1': H1,
-    'multiple': Multiple,
-    'job': Job,
-    'school': School,
-    'org': Org
-}
