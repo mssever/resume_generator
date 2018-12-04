@@ -44,5 +44,5 @@ def main():
         print(__doc__.format(prog=config.progname))
         return 0
     else:
-        print(__doc__.format(prog=config.progname))
+        sys.stderr.write(__doc__.format(prog=config.progname).rstrip() + '\n')
         return 1

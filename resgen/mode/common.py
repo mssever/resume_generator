@@ -5,6 +5,22 @@ from resgen.config import get_config
 from resgen.lib.collection import Collection
 from resgen.util import str_wrap
 
+def init_arg_parser(description, group_title, group_description, usage=None):
+    parser = argparse.ArgumentParser(
+        description=str_wrap(description),
+        formatter_class=argparse.RawTextHelpFormatter,
+        usage=usage,
+        add_help=False
+    )
+    g = parser.add_argument_group(title=group_title, description=str_wrap(group_description))
+    
+    def add_wrapper(*args, **kwargs):
+        if 'help' in kwargs.keys():
+            kwargs['help'] = str_wrap(kwargs['help'], kind='help')
+        return g.add_argument(*args, **kwargs)
+    
+    return (parser, add_wrapper)
+
 def parse_common_args(parser):
     def directory(d):
         config = get_config()
@@ -44,6 +60,5 @@ def parse_common_args(parser):
     add('-c', '--use-config', metavar='PATH', type=is_file, default=None, help=cnf)
     add('--version', action='version', version=config.version_string, help=ver)
     add('-h', '--help', action='help', default=argparse.SUPPRESS, help=hp)
-    args = Collection()
-    config.args = args
-    parser.parse_args(namespace=args)
+    config.args = Collection()
+    parser.parse_args(namespace=config.args)

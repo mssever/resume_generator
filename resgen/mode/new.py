@@ -8,30 +8,34 @@ import shutil
 import sys
 
 from resgen.config import get_config
-from .common import parse_common_args
-from resgen.util import str_wrap
+from .common import parse_common_args, init_arg_parser
+from resgen.util import str_wrap, check_if_project_directory
 
 def parse_args():
-    parser = argparse.ArgumentParser(
+    parser, add = init_arg_parser(
         description=__doc__,
-        formatter_class=argparse.RawTextHelpFormatter,
-        usage="%(prog)s generate (all|recipe|resume) [options]",
-        add_help=False
+        group_title="New Options",
+        group_description="You must specify one of: all, recipe, or resume.",
+        usage="%(prog)s generate (all|recipe|resume) [options]"
     )
-    g = parser.add_argument_group(title="New Options", description=str_wrap("You must specify one of the following options.", kind='help'))
-    add = g.add_argument
-    new = str_wrap('''
-    all: Generate a new project. The project directory must either be empty 
-    (although GIT files are permitted) or it must not exist, in which case it 
-    will be created. The project directory is the current working directory 
-    unless --project-dir is also given.
+    new = '''
+        all: Generate a new project. The project directory must either be empty 
+        (although GIT files are permitted) or it must not exist, in which case 
+        it will be created. The project directory is the current working 
+        directory unless --project-dir is also given.
 
-    recipe: Generates a new blank recipe.
+        recipe: Generates a new blank recipe.
 
-    resume: Generates a new blank resume.
-    ''', kind='help')
-    name = str_wrap("When generating a new recipe or resume, you need to give it a name using this option.", kind='help')
-    force = str_wrap("Bypass safety checks and create project files anyway. This option may be dangerous and should be used with care.", kind='help')
+        resume: Generates a new blank resume.
+        '''
+    name = """
+        When generating a new recipe or resume, you need to give it a name using
+        this option.
+        """
+    force = """
+        Bypass safety checks and create project files anyway. This option may 
+        be dangerous and should be used with care.
+        """
     add('type', choices=['all', 'recipe', 'resume'], help=new)
     add('-n', '--name', default=None, help=name)
     add('-f', '--force', action='store_true', help=force)
@@ -103,18 +107,20 @@ def new_all():
         '''))
         return 0
 
-def new_recipe():
+def _new_item(which):
+    if which not in ('resume', 'recipe'):
+        raise ArgumentError('Invalid value for which')
     config = get_config()
     if config.args.name is None:
         sys.stderr.write(str_wrap(
-            'ERROR: You must name your new recipe using the -n/--name option.'
+            f'ERROR: You must name your new {which} using the -n/--name option.'
         ))
         return 7
-    check_if_project_directory()
-    src = os.path.join(config.basedir, 'resgen', 'data', 'default_recipe.yaml')
-    dest = os.path.join(config.args.project_dir, f'{config.args.name}_recipe.yaml')
+    check_if_project_directory(force=True)
+    src = os.path.join(config.basedir, 'resgen', 'data', f'default_{which}.yaml')
+    dest = os.path.join(config.args.project_dir, f'{config.args.name}_{which}.yaml')
     if os.path.exists(dest):
-        sys.stderr.write(str_wrap(f'You already have a recipe named "{config.args.name}"!'))
+        sys.stderr.write(str_wrap(f'You already have a {which} named "{config.args.name}"!'))
         return 8
     try:
         shutil.copy(src, dest)
@@ -123,28 +129,7 @@ def new_recipe():
     return 0
 
 def new_resume():
-    raise NotImplementedError
+    return _new_item('resume')
 
-def check_if_project_directory():
-    config = get_config()
-    if not os.path.isdir(config.args.project_dir):
-        exit(str_wrap(f'ERROR: The project directory "{config.args.project_dir}" doesn\'t exist.'))
-    test = (
-        'config.yaml',
-        'default_resume.yaml',
-        'default_recipe.yaml',
-        'output'
-    )
-    if any(not os.path.exists(os.path.join(config.args.project_dir, i)) for i in test):
-        if config.args.force:
-            sys.stderr.write('--force: Bypassing safety check...\n')
-        else:
-            exit(str_wrap(f'''
-                The given directory, "{config.args.project_dir}" doesn't appear 
-                to be a project directory. Please either pass in a project 
-                directory using -d/--project-dir or change your working 
-                directory to a project directory. To override this warning, use 
-                -f/--force. However, it's likely that your new item won't work 
-                as expected if you do so.
-                '''
-            ))
+def new_recipe():
+    return _new_item('recipe')

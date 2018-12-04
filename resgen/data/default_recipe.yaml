@@ -1,2 +1,5 @@
 %YAML 1.2
 ---
+# This recipe overrides the settings in config.yaml. By default it's blank,
+# reflecting the defaults there. However, you may override any or all settings
+# in this recipe. See the config file for available options.
