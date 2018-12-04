@@ -74,30 +74,34 @@ def new_all():
         #'resume_list.yaml',
         #'recipe_list.yaml'
     )
-    for file_ in data_files:
-        shutil.copy(os.path.join(config.basedir, 'resgen', 'data', file_), dest)
-    os.mkdir(os.path.join(dest, 'output'))
-    print(str_wrap(f'''
-    A new project was created in `{dest}`. Here's a brief tour:
-    
-    * `default_resume.yaml` is your resume source. Put your complete resume in 
-      this file, and set tags and priorities as appropriate to enable you to 
-      generate different resumes as you wish. The comments in the file explain 
-      the options. You can create additional resumes using `{config.progname} 
-      new resume`, but you shouldn't do so unless absolutely necessary, as you 
-      will have to build each resume separately and can't combine them.
-    
-    * `default_recipe.yaml` defines how to build your resume. For each resume
-      variation, create a new recipe by running `{config.progname} new recipe -n recipe_name`.
-    
-    * `config.yaml` is where you configure your resume project. Look inside for 
-      comments explaining the configuration options.
-    
-    * `output` is the directory where your generated resumes are saved. Feel 
-      free to leave them there, symlink them to somewhere, or move them 
-      elsewhere.
-    '''))
-    return 0
+    try:
+        for file_ in data_files:
+            shutil.copy(os.path.join(config.basedir, 'resgen', 'data', file_), dest)
+        os.mkdir(os.path.join(dest, 'output'))
+    except OSError as e:
+        exit(str_wrap(f'ERROR: An error occurred during this operation: {e}'))
+    else:
+        print(str_wrap(f'''
+        A new project was created in `{dest}`. Here's a brief tour:
+        
+        * `default_resume.yaml` is your resume source. Put your complete resume in 
+          this file, and set tags and priorities as appropriate to enable you to 
+          generate different resumes as you wish. The comments in the file explain 
+          the options. You can create additional resumes using `{config.progname} 
+          new resume`, but you shouldn't do so unless absolutely necessary, as you 
+          will have to build each resume separately and can't combine them.
+        
+        * `default_recipe.yaml` defines how to build your resume. For each resume
+          variation, create a new recipe by running `{config.progname} new recipe -n recipe_name`.
+        
+        * `config.yaml` is where you configure your resume project. Look inside for 
+          comments explaining the configuration options.
+        
+        * `output` is the directory where your generated resumes are saved. Feel 
+          free to leave them there, symlink them to somewhere, or move them 
+          elsewhere.
+        '''))
+        return 0
 
 def new_recipe():
     config = get_config()
@@ -112,8 +116,14 @@ def new_recipe():
     if os.path.exists(dest):
         sys.stderr.write(str_wrap(f'You already have a recipe named "{config.args.name}"!'))
         return 8
-    shutil.copy(src, dest)
+    try:
+        shutil.copy(src, dest)
+    except OSError as e:
+        exit(str_wrap(f'ERROR: An error occurred while performing this operation: {e}'))
     return 0
+
+def new_resume():
+    raise NotImplementedError
 
 def check_if_project_directory():
     config = get_config()

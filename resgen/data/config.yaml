@@ -1,5 +1,13 @@
 %YAML 1.2
 ---
+# Which recipe and resume is the default? Recipe settings there override
+# anything in this file. (They can also override the default resume for that
+# recipe.) Recipe files are named <name>_recipe.yaml, while resume files are
+# named <name>_resume.yaml.
+default_inputs:
+  recipe: default
+  resume: default
+
 # Which formats to generate. Currently supports html and pdf.
 output_type:
   - html
