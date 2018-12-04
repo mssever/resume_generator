@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#-*- coding: utf-8 -*-
 
 '''
 This program generates résumés. Given a master résumé source, it can generate
