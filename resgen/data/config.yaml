@@ -1,2 +1,58 @@
 %YAML 1.2
 ---
+# Which formats to generate. Currently supports html and pdf.
+output_type:
+  - html
+  - pdf
+
+# Tags and priority: These two settings control which resume items appear in the 
+# output. Tags are useful for categorizing items, while priority can be used to
+# produce different resume lengths for different purposes. Both options work by
+# excluding items which don't match. Therefore, only items which match BOTH
+# settings will be included in the output.
+#
+# Which tags to include. Only items having at least one of the tags in this list
+# will be included. If this list is empty, all tags will be included.
+tags:
+  - short
+  - long
+
+# Which priority do we want? Items with a priority less than or equal to this
+# value will be included. Set to `null` to include all items.
+priority: 5
+
+# The following sections contain settings specific to their output format.
+
+# Options for HTML output
+html:
+
+  # If false, the default, will generate only the HTML necessary for the resume.
+  # Output will be suitable for inserting into a website template. If false,
+  # You must provide `prelude` and `postlude`, which will be attached to the
+  # beginning and end og the HTML output to produce a complete HTML document.
+  full_document: false
+
+  # Headings in the output will use this level. E.g.: heading_level: 1 means
+  # that top-level headings will produce H1 tags. Setting the level to 2 (the
+  # default) means that top-level headings will procude H2 tags. And so on.
+  heading_level: 2
+
+  # If true, any resume item with an ID or a name will have its corresponding
+  # HTML id specified in the output.
+  set_ids: true
+
+  # See the documentation for "full_document," above.
+  prelude: |
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <title>Resume</title>
+    </head>
+    <body>
+      <h1>Resume</h1>
+  
+  # See the documentation for "full_document," above.
+  postlude: |
+    </body>
+    </html>
