@@ -1,5 +1,6 @@
+import re
 import shutil
-from textwrap import dedent, fill
+from textwrap import dedent, wrap
 
 def str_wrap(string, kind='normal'):
     cols, lines = shutil.get_terminal_size()
@@ -7,4 +8,14 @@ def str_wrap(string, kind='normal'):
         # The width of argparse's left margin for help text, minus 1 for
         # scrollbar padding on Windows' cmd.exe.
         cols = max(cols-23-1, 10)
-    return '\n\n'.join(fill(p, width=cols) for p in dedent(string).split('\n\n'))
+    out = []
+    for paragraph in re.split(r'\r?\n\r?\n', dedent(string)):
+        paragraph = re.sub(r'[\s]+', ' ', paragraph.strip())
+        lines = wrap(paragraph, width=cols,
+                     replace_whitespace=True, break_long_words=False)
+        out.append('\n'.join(lines))
+    out = '\n\n'.join(out)
+    if kind == 'help':
+        return out
+    else:
+        return out + '\n'
