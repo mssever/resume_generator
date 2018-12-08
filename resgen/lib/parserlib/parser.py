@@ -1,4 +1,16 @@
-from ruamel.yaml import YAML
+try:
+    from ruamel.yaml import YAML
+except ImportError:
+    from resgen.util import str_wrap
+    exit(str_wrap('''
+    ERROR: This program depends on the ruamel YAML library. Please install it
+    before continuing.
+
+    On Ubuntu: sudo pip3 install ruamel.yaml
+
+    On Windows as administrator: pip install ruamel.yaml
+
+    '''))
 
 class NotLoadedError(Exception):
     pass
