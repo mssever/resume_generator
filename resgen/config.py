@@ -25,8 +25,7 @@ deemed private.
 
 import json
 import os
-from resgen.lib.collection import Collection
-
+from .lib.collection import Collection
 __all__ = ['get_config']
 _settings_obj = None
 
@@ -44,45 +43,10 @@ class _SettingsObject(Collection):
     '''The class which stores settings. Don't create an instance directly.
     instead, use get_config().'''
     
-    pass
-
-#    def __init__(self):
-#        ''' Initialize.
-#        In addition to regular init, this method also initializes certain
-#        settings to values found under data/managed_settings.json, which may be
-#        overwritten by init_settings(), and looks for a config file at a
-#        hard-coded location (~/.config/sleep_inhibit.json).
-#        '''
-#        Collection.__init__(self)
-#        self.config_file = '{}/.config/sleep_inhibit.json'.format(os.environ['HOME'])
-#        # self.managed_settings holds the settings which should be saved to disk,
-#        # as well as their default (initial) values.
-#        with open(os.path.realpath(__file__ + '/../data/managed_settings.json')) as f:
-#            data = '\n'.join(line.strip() for line in f.readlines() if not line.strip().startswith('//'))
-#            self.managed_settings = json.loads(data)
-#        if not os.path.isfile(self.config_file):
-#            with open(self.config_file, 'w') as f:
-#                f.write('//\n//\n{}\n')
-#        for key, value in self.managed_settings.items():
-#            self.add_property(key, value)
-#        self._init_settings()
-#
-#    def _init_settings(self):
-#        '''Initialize settings from the config file.'''
-#        with open(self.config_file) as f:
-#            lines = [line.strip() for line in f.readlines() if not line.strip().startswith('//')]
-#            data = json.loads('\n'.join(lines))
-#        for key, value in data.items():
-#            self.update_property(key, value)
-#
-#    def save_settings(self):
-#        '''Save managed settings to the configuration file.
-#
-#        Call this after you update a managed setting. Calling it after setting a
-#        non-managed setting just wastes processor cycles.'''
-#        output = {}
-#        warning = "// Sleep Inhibit Settings\n// Don't edit this file manually while the program is running lest your changes be overwritten."
-#        for setting in self.managed_settings.keys():
-#            output[setting] = self.__dict__[setting]
-#        with open(self.config_file, 'w') as f:
-#            f.write('\n'.join([warning, json.dumps(output, sort_keys=True, indent=2)]))
+    def __str__(self):
+        return '===============\nSettingsObject:\n' + '\n'.join(
+            f'\t{k}: {str(v)}' for k, v in self
+        ) + '\n==============='
+    
+    def __iter__(self):
+        return self.keys()

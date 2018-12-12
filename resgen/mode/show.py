@@ -2,7 +2,8 @@ import os
 
 from resgen.lib.parserlib.parser import Parse_YAML
 from resgen.config import get_config
-from resgen.lib.output.config import OutputConfig
+from resgen.lib.output.config import parse_output_config
+from resgen.util import show_config
 
 def run():
     config = get_config()
@@ -17,18 +18,9 @@ def run():
         'synopsis_title:\n' + str(config.resume_part_ids['synopsis_title']),
         'synopsis:\n' + str(config.resume_part_ids['synopsis']),
     ]))
-    parse_output_config()
+    config.output = parse_output_config()
     print(repr(config.output))
     return 0
-
-def parse_output_config():
-    #resgen.lib.output.parser.parse_config(get_config().output_config_file)
-    config = get_config()
-    config.output = OutputConfig(*config.output_config_files)
-
-def show_config():
-    config = get_config()
-    return '\n'.join(f'{k}: {repr(v)}' for k, v in config.keys())
 
 def dump_yaml(doc):
     yaml = Parse_YAML()

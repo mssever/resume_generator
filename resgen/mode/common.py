@@ -1,9 +1,9 @@
 import argparse
 import os
 
-from resgen.config import get_config
-from resgen.lib.collection import Collection
-from resgen.util import str_wrap
+from ..config import get_config
+from ..lib.collection import Collection
+from ..util import str_wrap
 
 def init_arg_parser(description, group_title, group_description, usage=None):
     parser = argparse.ArgumentParser(
@@ -36,11 +36,11 @@ def parse_common_args(parser):
             raise argparse.ArgumentTypeError(f'Improper dirname: "{os.path.dirname(d)}"')
     
     def is_file(f):
-        if os.path.sep not in f:
-            f = os.path.join(os.path.curdir, f)
         if f is None:
             return f
-        elif not os.path.isfile(f) and not os.path.islink(f):
+        elif os.path.sep not in f:
+            f = os.path.join(os.path.curdir, f)
+        if not os.path.isfile(f) and not os.path.islink(f):
             raise argparse.ArgumentTypeError(f"The specified config file ({f}) doesn't exist.")
         else:
             return f

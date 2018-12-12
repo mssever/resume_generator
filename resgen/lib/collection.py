@@ -81,6 +81,10 @@ class Collection(object):
                     'The attribute "{}" doesn\'t exist or can\'t be removed.'.format(i)
                 )
     
+    def get(self, key, default=None):
+        '''Returns the value of self.key if it exists, else default.'''
+        return self.__dict__.get(key, default)
+    
     def keys(self):
         '''Return a generator listing all the settings in alphabetical order as (key, value).'''
         return ((key, self.__dict__[key]) for key in sorted(self.__dict__.keys()) if key in self._contained_items)

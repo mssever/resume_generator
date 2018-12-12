@@ -34,7 +34,7 @@ def check_if_project_directory(force=False):
         'output'
     )
     if any(not os.path.exists(os.path.join(config.args.project_dir, i)) for i in test):
-        if config.args.force:
+        if config.args.get('force', False):
             sys.stderr.write('--force: Bypassing safety check...\n')
         else:
             s = f'''
@@ -49,3 +49,6 @@ def check_if_project_directory(force=False):
                 that you will have problems if you do so.
                 '''
             exit(str_wrap(s))
+
+def show_config():
+    return str(get_config())

@@ -1,5 +1,6 @@
-from resgen.lib.collection import Collection
+from ..lib.collection import Collection
 from .parser import parse_config
+from ...config import get_config
 
 ### FIXME: Doesn't yet properly do deep merges.
 class OutputConfig(Collection):
@@ -11,3 +12,11 @@ class OutputConfig(Collection):
             config = parse_config(filename)
             for key, value in config.items():
                 self.update_property(key, value)
+
+def parse_output_config(files=None):
+    #resgen.lib.output.parser.parse_config(get_config().output_config_file)
+    config = get_config()
+    if files is None:
+        files = config.output_config_files
+    print(files)
+    #return OutputConfig(*files)
