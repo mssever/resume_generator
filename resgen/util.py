@@ -7,6 +7,7 @@ from resgen.config import get_config
 
 def str_wrap(string, kind='normal'):
     cols, lines = shutil.get_terminal_size()
+    cols = min(cols, 100)
     if kind == 'help':
         # The width of argparse's left margin for help text, minus 1 for
         # scrollbar padding on Windows' cmd.exe.

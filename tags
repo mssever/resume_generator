@@ -1,0 +1,81 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+Collection	resgen/lib/collection.py	/^class Collection(object):$/;"	c
+H1	resgen/lib/parserlib/types.py	/^class H1(YamlTypesBase):$/;"	c
+Job	resgen/lib/parserlib/types.py	/^class Job(YamlTypesBase):$/;"	c
+Multiple	resgen/lib/parserlib/types.py	/^class Multiple(YamlTypesBase):$/;"	c
+NotLoadedError	resgen/lib/parserlib/parser.py	/^class NotLoadedError(Exception):$/;"	c
+Org	resgen/lib/parserlib/types.py	/^class Org(YamlTypesBase):$/;"	c
+OutputConfig	resgen/lib/output/config.py	/^class OutputConfig(Collection):$/;"	c
+Parse_YAML	resgen/lib/parserlib/parser.py	/^class Parse_YAML(YAML):$/;"	c
+Person	resgen/lib/parserlib/types.py	/^class Person(YamlTypesBase):$/;"	c
+School	resgen/lib/parserlib/types.py	/^class School(YamlTypesBase):$/;"	c
+Text	resgen/lib/parserlib/types.py	/^class Text(YamlTypesBase):$/;"	c
+YamlTypesBase	resgen/lib/parserlib/types_base.py	/^class YamlTypesBase:$/;"	c
+_SettingsObject	resgen/config.py	/^class _SettingsObject(Collection):$/;"	c
+__all__	resgen/config.py	/^__all__ = ['get_config']$/;"	v
+__all__	resgen/lib/parserlib/types.py	/^__all__ = ['make_object', 'Text', 'Person', 'H1', 'Multiple', 'Job', 'School', 'Org']$/;"	v
+__getitem__	resgen/lib/parserlib/parser.py	/^    def __getitem__(self, key):$/;"	m	class:Parse_YAML	file:
+__init__	resgen/lib/collection.py	/^    def __init__(self, **kwargs):$/;"	m	class:Collection
+__init__	resgen/lib/output/config.py	/^    def __init__(self, *config_files):$/;"	m	class:OutputConfig
+__init__	resgen/lib/parserlib/parser.py	/^    def __init__(self, *args, **kwargs):$/;"	m	class:Parse_YAML
+__init__	resgen/lib/parserlib/types.py	/^    def __init__(self, **kwargs):$/;"	m	class:H1
+__init__	resgen/lib/parserlib/types.py	/^    def __init__(self, **kwargs):$/;"	m	class:Job
+__init__	resgen/lib/parserlib/types.py	/^    def __init__(self, **kwargs):$/;"	m	class:Org
+__init__	resgen/lib/parserlib/types.py	/^    def __init__(self, **kwargs):$/;"	m	class:Person
+__init__	resgen/lib/parserlib/types.py	/^    def __init__(self, **kwargs):$/;"	m	class:School
+__init__	resgen/lib/parserlib/types_base.py	/^    def __init__(self,**kwargs):$/;"	m	class:YamlTypesBase
+__iter__	resgen/lib/parserlib/parser.py	/^    def __iter__(self):$/;"	m	class:Parse_YAML	file:
+__repr__	resgen/lib/collection.py	/^    def __repr__(self):$/;"	m	class:Collection	file:
+__repr__	resgen/lib/parserlib/parser.py	/^    def __repr__(self):$/;"	m	class:Parse_YAML	file:
+__repr__	resgen/lib/parserlib/types_base.py	/^    def __repr__(self):$/;"	m	class:YamlTypesBase	file:
+__setattr__	resgen/lib/collection.py	/^    def __setattr__(self, name, value):$/;"	m	class:Collection	file:
+__str__	resgen/lib/parserlib/types.py	/^    def __str__(self):$/;"	m	class:H1	file:
+__str__	resgen/lib/parserlib/types.py	/^    def __str__(self):$/;"	m	class:Job	file:
+__str__	resgen/lib/parserlib/types.py	/^    def __str__(self):$/;"	m	class:Multiple	file:
+__str__	resgen/lib/parserlib/types.py	/^    def __str__(self):$/;"	m	class:Org	file:
+__str__	resgen/lib/parserlib/types.py	/^    def __str__(self):$/;"	m	class:Person	file:
+__str__	resgen/lib/parserlib/types.py	/^    def __str__(self):$/;"	m	class:School	file:
+__str__	resgen/lib/parserlib/types_base.py	/^    def __str__(self):$/;"	m	class:YamlTypesBase	file:
+_new_item	resgen/mode/new.py	/^def _new_item(which):$/;"	f
+_settings_obj	resgen/config.py	/^_settings_obj = None$/;"	v
+_show_in_repr	resgen/lib/parserlib/types.py	/^    def _show_in_repr(self):$/;"	m	class:H1
+_show_in_repr	resgen/lib/parserlib/types.py	/^    def _show_in_repr(self):$/;"	m	class:Job
+_show_in_repr	resgen/lib/parserlib/types.py	/^    def _show_in_repr(self):$/;"	m	class:Org
+_show_in_repr	resgen/lib/parserlib/types.py	/^    def _show_in_repr(self):$/;"	m	class:Person
+_show_in_repr	resgen/lib/parserlib/types.py	/^    def _show_in_repr(self):$/;"	m	class:School
+_show_in_repr	resgen/lib/parserlib/types_base.py	/^    def _show_in_repr(self):$/;"	m	class:YamlTypesBase
+add_property	resgen/lib/collection.py	/^    def add_property(self, key, value):$/;"	m	class:Collection
+add_wrapper	resgen/mode/common.py	/^    def add_wrapper(*args, **kwargs):$/;"	f	function:init_arg_parser
+check_if_project_directory	resgen/util.py	/^def check_if_project_directory(force=False):$/;"	f
+config	resume_generator.py	/^    config = resgen.config.get_config()$/;"	v
+directory	resgen/mode/common.py	/^    def directory(d):$/;"	f	function:parse_common_args
+dump_yaml	resgen/mode/show.py	/^def dump_yaml(doc):$/;"	f
+get_config	resgen/config.py	/^def get_config():$/;"	f
+init_arg_parser	resgen/mode/common.py	/^def init_arg_parser(description, group_title, group_description, usage=None):$/;"	f
+is_file	resgen/mode/common.py	/^    def is_file(f):$/;"	f	function:parse_common_args
+items	resgen/lib/parserlib/parser.py	/^    def items(self):$/;"	m	class:Parse_YAML
+keys	resgen/lib/collection.py	/^    def keys(self):$/;"	m	class:Collection
+load	resgen/lib/parserlib/parser.py	/^    def load(self, *args, **kwargs):$/;"	m	class:Parse_YAML
+main	resgen/startup.py	/^def main():$/;"	f
+make_object	resgen/lib/parserlib/factories.py	/^def make_object(src, inherited_tags=None, inherited_priority=None, id_register=None, obj_name=None):$/;"	f
+names	resgen/lib/parserlib/parser.py	/^    def names(self):$/;"	m	class:Parse_YAML
+new_all	resgen/mode/new.py	/^def new_all():$/;"	f
+new_recipe	resgen/mode/new.py	/^def new_recipe():$/;"	f
+new_resume	resgen/mode/new.py	/^def new_resume():$/;"	f
+parse_args	resgen/mode/new.py	/^def parse_args():$/;"	f
+parse_common_args	resgen/mode/common.py	/^def parse_common_args(parser):$/;"	f
+parse_config	resgen/lib/output/parser.py	/^def parse_config(filename):$/;"	f
+parse_output_config	resgen/mode/show.py	/^def parse_output_config():$/;"	f
+rm	resgen/lib/collection.py	/^    def rm(self, *args):$/;"	m	class:Collection
+run	resgen/mode/build.py	/^def run():$/;"	f
+run	resgen/mode/new.py	/^def run():$/;"	f
+run	resgen/mode/show.py	/^def run():$/;"	f
+show_config	resgen/mode/show.py	/^def show_config():$/;"	f
+str_wrap	resgen/util.py	/^def str_wrap(string, kind='normal'):$/;"	f
+update_property	resgen/lib/collection.py	/^    def update_property(self, key, value):$/;"	m	class:Collection
+ver	resume_generator.py	/^ver = sys.version_info$/;"	v
