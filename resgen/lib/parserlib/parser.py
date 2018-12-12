@@ -6,7 +6,7 @@ except ImportError:
     ERROR: This program depends on the ruamel YAML library. Please install it
     before continuing.
 
-    On Ubuntu: sudo pip3 install ruamel.yaml
+    On Ubuntu: sudo apt install python3-ruamel.yaml
 
     On Windows as administrator: pip install ruamel.yaml
 
