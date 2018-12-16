@@ -1,4 +1,5 @@
 import argparse
+import logging
 import os
 
 from ..config import get_config
@@ -6,6 +7,7 @@ from ..lib.collection import Collection
 from ..util import str_wrap
 
 def init_arg_parser(description, group_title, group_description, usage=None):
+    '''Returns: (parser, add_argument_wrapper)'''
     parser = argparse.ArgumentParser(
         description=str_wrap(description),
         formatter_class=argparse.RawTextHelpFormatter,
@@ -13,12 +15,12 @@ def init_arg_parser(description, group_title, group_description, usage=None):
         add_help=False
     )
     g = parser.add_argument_group(title=group_title, description=str_wrap(group_description))
-    
+
     def add_wrapper(*args, **kwargs):
         if 'help' in kwargs.keys():
             kwargs['help'] = str_wrap(kwargs['help'], kind='help')
         return g.add_argument(*args, **kwargs)
-    
+
     return (parser, add_wrapper)
 
 def parse_common_args(parser):
@@ -34,7 +36,7 @@ def parse_common_args(parser):
             return d
         else:
             raise argparse.ArgumentTypeError(f'Improper dirname: "{os.path.dirname(d)}"')
-    
+
     def is_file(f):
         if f is None:
             return f
@@ -44,7 +46,7 @@ def parse_common_args(parser):
             raise argparse.ArgumentTypeError(f"The specified config file ({f}) doesn't exist.")
         else:
             return f
-    
+
     config = get_config()
     group = parser.add_argument_group(title="Common Options", description=str_wrap("These arguments apply to all modes.", kind='help'))
     add = group.add_argument
@@ -54,11 +56,25 @@ def parse_common_args(parser):
     ver = str_wrap('Show the version number and exit.', kind='help')
     hp = str_wrap('Show this help message and exit.', kind='help')
     cnf = str_wrap('Use this config file instead of the default.', kind='help')
+    verbose = 'Display extra info. Repeat once for still more verbosity'
     add('-d', '--project-dir', metavar='DIRECTORY', default=os.getcwd(), type=directory, help=pdir)
     add('-R', '--use-recipe', metavar="RECIPE", default=None, help=recipe)
     add('-E', '--use-resume', metavar="RESUME", default=None, help=resume)
     add('-c', '--use-config', metavar='PATH', type=is_file, default=None, help=cnf)
+    add('-v', '--verbose', action='count', dest='verbosity', help=verbose)
     add('--version', action='version', version=config.version_string, help=ver)
     add('-h', '--help', action='help', default=argparse.SUPPRESS, help=hp)
     config.args = Collection()
     parser.parse_args(namespace=config.args)
+    config.args.verbosity = set_verbosity(config.args.verbosity)
+
+def set_verbosity(v):
+    verbosity = logging.WARN
+    if v is None:
+        return verbosity
+    elif v == 1:
+        verbosity = logging.INFO
+    elif v > 1:
+        verbosity = logging.DEBUG
+    return verbosity
+

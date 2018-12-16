@@ -1,4 +1,4 @@
-from ..lib.collection import Collection
+from ..collection import Collection
 from .parser import parse_config
 from ...config import get_config
 
